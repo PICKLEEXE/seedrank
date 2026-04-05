@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String        @id @default(cuid())
+  email            String        @unique
+  name             String?
+  password         String
+  planId           String        @default("free")
+  stripeCustomerId String?
+  sites            Site[]
+  integrations     Integration[]
+  createdAt        DateTime      @default(now())
+}
+
+model Site {
+  id                String     @id @default(cuid())
+  userId            String
+  user              User       @relation(fields: [userId], references: [id])
+  domain            String
+  verified          Boolean    @default(false)
+  verificationToken String     @default(uuid())
+  autopilotEnabled  Boolean    @default(false)
+  cmsType           String?
+  cmsCredentials    Json?
+  articles          Article[]
+  keywords          Keyword[]
+  backlinks         Backlink[]
+  createdAt         DateTime   @default(now())
+}
+
+model Article {
+  id             String    @id @default(cuid())
+  siteId         String
+  site           Site      @relation(fields: [siteId], references: [id])
+  title          String
+  content        String    @db.Text
+  status         String    @default("draft")
+  targetKeywords String[]
+  seoScore       Int?
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+}
+
+model Integration {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        String
+  credentials Json
+  status      String   @default("connected")
+  createdAt   DateTime @default(now())
+}
+
+model Keyword {
+  id           String   @id @default(cuid())
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id])
+  keyword      String
+  searchVolume Int?
+  difficulty   Int?
+  position     Int?
+  trackedAt    DateTime @default(now())
+}
+
+model Backlink {
+  id           String   @id @default(cuid())
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id])
+  sourceUrl    String
+  targetUrl    String
+  status       String   @default("active")
+  discoveredAt DateTime @default(now())
+}

@@ -1,0 +1,68 @@
+import Stripe from "stripe";
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-04-10",
+  typescript: true,
+});
+
+export const PLANS = {
+  free: {
+    id: "free",
+    name: "Free",
+    price: 0,
+    sites: 1,
+    articles: 5,
+    keywords: 10,
+    team: 1,
+    integrations: 1,
+    backlinks: 5,
+  },
+  beginner: {
+    id: "beginner",
+    name: "Beginner",
+    price: 99,
+    sites: 2,
+    articles: 30,
+    keywords: 20,
+    team: 2,
+    integrations: 5,
+    backlinks: 50,
+    stripePriceId: process.env.STRIPE_PRICE_BEGINNER,
+  },
+  pro: {
+    id: "pro",
+    name: "Pro",
+    price: 299,
+    sites: 10,
+    articles: 100,
+    keywords: 100,
+    team: 5,
+    integrations: 10,
+    backlinks: 150,
+    stripePriceId: process.env.STRIPE_PRICE_PRO,
+  },
+  ultimate: {
+    id: "ultimate",
+    name: "Ultimate",
+    price: 599,
+    sites: 20,
+    articles: 300,
+    keywords: 200,
+    team: 15,
+    integrations: 50,
+    backlinks: 500,
+    stripePriceId: process.env.STRIPE_PRICE_ULTIMATE,
+  },
+  enterprise: {
+    id: "enterprise",
+    name: "Enterprise",
+    price: 999,
+    sites: 50,
+    articles: 600,
+    keywords: 500,
+    team: Infinity,
+    integrations: 100,
+    backlinks: 1000,
+    stripePriceId: process.env.STRIPE_PRICE_ENTERPRISE,
+  },
+};

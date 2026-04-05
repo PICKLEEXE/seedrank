@@ -1,0 +1,23 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { Providers } from "./providers";
+import { Toaster } from "@/components/ui/toaster";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "RankRoot AI – SEO Automation Platform",
+  description: "Zautomatyzuj swoje SEO z pomocą AI",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="pl">
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+        <Toaster />
+      </body>
+    </html>
+  );
+}
