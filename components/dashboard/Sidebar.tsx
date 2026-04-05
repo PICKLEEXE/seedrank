@@ -14,12 +14,14 @@ import {
   CreditCard,
   KeyRound,
   Users,
+  Tag,
 } from "lucide-react";
 
 const mainNav = [
   { href: "/panel", label: "Panel", icon: LayoutDashboard },
   { href: "/strony", label: "Strony", icon: Globe },
   { href: "/artykuly", label: "Artykuły", icon: FileText },
+  { href: "/slowa-kluczowe", label: "Słowa kluczowe", icon: Tag },
   { href: "/wydajnosc", label: "Wydajność", icon: TrendingUp },
   { href: "/social", label: "Social Media", icon: Share2 },
   { href: "/integracje", label: "Integracje", icon: Plug },

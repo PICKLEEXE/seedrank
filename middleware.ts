@@ -21,5 +21,6 @@ export const config = {
     "/ustawienia/:path*",
     "/wydajnosc/:path*",
     "/social/:path*",
+    "/slowa-kluczowe/:path*",
   ],
 };
