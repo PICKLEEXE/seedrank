@@ -50,8 +50,8 @@ export default function NowyArtykulPage() {
 
   async function handleGenerate() {
     setError("");
-    if (!siteId) return setError("Wybierz stronę.");
-    if (keywords.length === 0) return setError("Dodaj przynajmniej jedno słowo kluczowe.");
+    if (!siteId) return setError("Please select a site.");
+    if (keywords.length === 0) return setError("Add at least one keyword.");
 
     setGenerating(true);
     try {
@@ -62,12 +62,12 @@ export default function NowyArtykulPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Błąd generowania artykułu.");
+        setError(data.error || "Error generating article.");
         return;
       }
       router.push(`/artykuly/${data.article.id}`);
     } catch {
-      setError("Błąd sieci. Spróbuj ponownie.");
+      setError("Network error. Please try again.");
     } finally {
       setGenerating(false);
     }
@@ -83,20 +83,20 @@ export default function NowyArtykulPage() {
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Nowy artykuł</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Wygeneruj artykuł SEO dla swojej strony</p>
+          <h1 className="text-2xl font-bold text-gray-900">New article</h1>
+          <p className="text-gray-500 text-sm mt-0.5">Generate an SEO article for your site</p>
         </div>
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
         {/* Site select */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Strona</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Site</label>
           {sites.length === 0 ? (
             <div className="text-sm text-gray-500 border border-dashed border-gray-300 rounded-lg p-4 text-center">
-              Brak zweryfikowanych stron.{" "}
+              No verified sites.{" "}
               <Link href="/strony" className="text-green-600 hover:underline">
-                Dodaj stronę →
+                Add a site →
               </Link>
             </div>
           ) : (
@@ -117,7 +117,7 @@ export default function NowyArtykulPage() {
         {/* Keywords */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-            Słowa kluczowe
+            Keywords
           </label>
           <div className="flex gap-2">
             <input
@@ -125,7 +125,7 @@ export default function NowyArtykulPage() {
               value={keywordInput}
               onChange={(e) => setKeywordInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="np. pozycjonowanie stron"
+              placeholder="e.g. seo optimization"
               className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             <button
@@ -133,7 +133,7 @@ export default function NowyArtykulPage() {
               className="flex items-center gap-1 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
             >
               <Plus className="h-4 w-4" />
-              Dodaj
+              Add
             </button>
           </div>
           {keywords.length > 0 && (
@@ -170,10 +170,10 @@ export default function NowyArtykulPage() {
           {generating ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Generowanie...
+              Generating...
             </>
           ) : (
-            "Generuj artykuł"
+            "Generate article"
           )}
         </button>
       </div>

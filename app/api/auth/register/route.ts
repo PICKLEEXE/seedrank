@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      return NextResponse.json({ error: "Konto z tym emailem już istnieje" }, { status: 400 });
+      return NextResponse.json({ error: "An account with this email already exists" }, { status: 400 });
     }
 
     const hashed = await bcrypt.hash(password, 12);
@@ -29,6 +29,6 @@ export async function POST(req: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Wewnętrzny błąd serwera" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

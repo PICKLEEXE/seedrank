@@ -43,13 +43,13 @@ export async function POST(req: Request) {
     if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     const site = await prisma.site.findFirst({ where: { id: body.siteId, userId: user.id } });
-    if (!site) return NextResponse.json({ error: "Strona nie znaleziona" }, { status: 404 });
+    if (!site) return NextResponse.json({ error: "Site not found" }, { status: 404 });
 
     const plan = PLANS[user.planId as keyof typeof PLANS] || PLANS.free;
     const keywordCount = await prisma.keyword.count({ where: { site: { userId: user.id } } });
     if (keywordCount >= plan.keywords) {
       return NextResponse.json(
-        { error: `Limit słów kluczowych osiągnięty (${plan.keywords})` },
+        { error: `Keyword limit reached (${plan.keywords})` },
         { status: 403 }
       );
     }
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       where: { siteId: body.siteId, keyword: body.keyword },
     });
     if (existing) {
-      return NextResponse.json({ error: "To słowo kluczowe już jest śledzone" }, { status: 409 });
+      return NextResponse.json({ error: "This keyword is already being tracked" }, { status: 409 });
     }
 
     const keyword = await prisma.keyword.create({
@@ -75,6 +75,6 @@ export async function POST(req: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Wewnętrzny błąd serwera" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

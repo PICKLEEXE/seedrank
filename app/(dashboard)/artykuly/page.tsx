@@ -6,13 +6,13 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
 const STATUS_FILTERS = [
-  { key: "all", label: "Wszystkie" },
-  { key: "draft", label: "Szkice" },
-  { key: "generating", label: "Generowane" },
-  { key: "review", label: "Do recenzji" },
-  { key: "approved", label: "Zatwierdzone" },
-  { key: "scheduled", label: "Zaplanowane" },
-  { key: "published", label: "Opublikowane" },
+  { key: "all", label: "All" },
+  { key: "draft", label: "Drafts" },
+  { key: "generating", label: "Generating" },
+  { key: "review", label: "In review" },
+  { key: "approved", label: "Approved" },
+  { key: "scheduled", label: "Scheduled" },
+  { key: "published", label: "Published" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -25,12 +25,12 @@ const statusColors: Record<string, string> = {
 };
 
 const statusLabels: Record<string, string> = {
-  published: "Opublikowany",
-  approved: "Zatwierdzony",
-  draft: "Szkic",
-  generating: "Generowanie",
-  scheduled: "Zaplanowany",
-  review: "Do recenzji",
+  published: "Published",
+  approved: "Approved",
+  draft: "Draft",
+  generating: "Generating",
+  scheduled: "Scheduled",
+  review: "In review",
 };
 
 interface Article {
@@ -75,7 +75,7 @@ export default function ArtykulyPage() {
   });
 
   async function deleteArticle(id: string) {
-    if (!confirm("Usunąć artykuł?")) return;
+    if (!confirm("Delete this article?")) return;
     await fetch(`/api/articles/${id}`, { method: "DELETE" });
     setArticles((prev) => prev.filter((a) => a.id !== id));
   }
@@ -84,15 +84,15 @@ export default function ArtykulyPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Artykuły</h1>
-          <p className="text-gray-500 text-sm mt-1">Zarządzaj i generuj treści SEO</p>
+          <h1 className="text-2xl font-bold text-gray-900">Articles</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage and generate SEO content</p>
         </div>
         <Link
           href="/artykuly/nowy"
           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Nowy artykuł
+          New article
         </Link>
       </div>
 
@@ -102,7 +102,7 @@ export default function ArtykulyPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Szukaj artykułów..."
+            placeholder="Search articles..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
@@ -113,7 +113,7 @@ export default function ArtykulyPage() {
           onChange={(e) => setSelectedSite(e.target.value)}
           className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
         >
-          <option value="all">Wszystkie strony</option>
+          <option value="all">All sites</option>
           {sites.map((s) => (
             <option key={s.id} value={s.domain}>{s.domain}</option>
           ))}
@@ -147,15 +147,15 @@ export default function ArtykulyPage() {
           <FileText className="h-12 w-12 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500 font-medium">
             {articles.length === 0
-              ? "Brak artykułów. Dodaj stronę i uruchom autopilota."
-              : "Brak wyników dla podanych filtrów."}
+              ? "No articles yet. Add a site and enable autopilot."
+              : "No results for the selected filters."}
           </p>
           {articles.length === 0 && (
             <Link
               href="/strony"
               className="inline-flex items-center gap-2 mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
-              Dodaj stronę →
+              Add site →
             </Link>
           )}
         </div>
@@ -164,11 +164,11 @@ export default function ArtykulyPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
-                <th className="text-left px-5 py-3 font-medium text-gray-600">Tytuł</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-600">Strona</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-600">Title</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-600">Site</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-600">Status</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-600">SEO</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-600">Data</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-600">Date</th>
                 <th className="px-5 py-3" />
               </tr>
             </thead>

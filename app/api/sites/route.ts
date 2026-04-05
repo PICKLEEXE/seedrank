@@ -41,14 +41,14 @@ export async function POST(req: Request) {
 
     if (siteCount >= plan.sites) {
       return NextResponse.json(
-        { error: `Osiągnięto limit stron dla planu ${plan.name} (${plan.sites})` },
+        { error: `Site limit reached for the ${plan.name} plan (${plan.sites})` },
         { status: 403 }
       );
     }
 
     const existing = await prisma.site.findFirst({ where: { userId: user.id, domain } });
     if (existing) {
-      return NextResponse.json({ error: "Ta domena już istnieje na Twoim koncie" }, { status: 400 });
+      return NextResponse.json({ error: "This domain already exists on your account" }, { status: 400 });
     }
 
     const site = await prisma.site.create({
@@ -58,8 +58,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ site }, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Nieprawidłowa domena" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid domain" }, { status: 400 });
     }
-    return NextResponse.json({ error: "Wewnętrzny błąd serwera" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

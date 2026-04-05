@@ -15,7 +15,7 @@ const PLANS = [
     team: 1,
     integrations: 1,
     backlinks: 5,
-    features: ["SEO Autopilot", "API", "Tryb agencji", "Korekty AI"],
+    features: ["SEO Autopilot", "API", "Agency mode", "AI corrections"],
     featureFlags: [false, false, false, false],
     highlight: false,
   },
@@ -30,7 +30,7 @@ const PLANS = [
     team: 2,
     integrations: 5,
     backlinks: 50,
-    features: ["SEO Autopilot", "API", "Tryb agencji", "Korekty AI"],
+    features: ["SEO Autopilot", "API", "Agency mode", "AI corrections"],
     featureFlags: [true, false, false, true],
     highlight: false,
   },
@@ -45,7 +45,7 @@ const PLANS = [
     team: 5,
     integrations: 10,
     backlinks: 150,
-    features: ["SEO Autopilot", "API", "Tryb agencji", "Korekty AI"],
+    features: ["SEO Autopilot", "API", "Agency mode", "AI corrections"],
     featureFlags: [true, true, false, true],
     highlight: true,
   },
@@ -60,7 +60,7 @@ const PLANS = [
     team: 15,
     integrations: 50,
     backlinks: 500,
-    features: ["SEO Autopilot", "API", "Tryb agencji", "Korekty AI"],
+    features: ["SEO Autopilot", "API", "Agency mode", "AI corrections"],
     featureFlags: [true, true, true, true],
     highlight: false,
   },
@@ -75,7 +75,7 @@ const PLANS = [
     team: Infinity,
     integrations: 100,
     backlinks: 1000,
-    features: ["SEO Autopilot", "API", "Tryb agencji", "Korekty AI"],
+    features: ["SEO Autopilot", "API", "Agency mode", "AI corrections"],
     featureFlags: [true, true, true, true],
     highlight: false,
   },
@@ -112,28 +112,28 @@ export default function PlatnosciPage() {
   return (
     <div className="space-y-8 max-w-6xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Płatności</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Billing</h1>
         <p className="text-gray-500 text-sm mt-1">
-          Obecny plan:{" "}
+          Current plan:{" "}
           <span className="font-semibold text-green-600">{plan.name}</span>
         </p>
       </div>
 
       {/* Usage */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="font-semibold text-gray-900 mb-4">Wykorzystanie w tym miesiącu</h2>
+        <h2 className="font-semibold text-gray-900 mb-4">Usage this month</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <UsageBar label="Artykuły" used={usage.articles} max={plan.articles} />
-          <UsageBar label="Strony" used={usage.sites} max={plan.sites} />
-          <UsageBar label="Słowa kluczowe" used={usage.keywords} max={plan.keywords} />
-          <UsageBar label="Backlinki" used={usage.backlinks} max={plan.backlinks} />
+          <UsageBar label="Articles" used={usage.articles} max={plan.articles} />
+          <UsageBar label="Sites" used={usage.sites} max={plan.sites} />
+          <UsageBar label="Keywords" used={usage.keywords} max={plan.keywords} />
+          <UsageBar label="Backlinks" used={usage.backlinks} max={plan.backlinks} />
         </div>
       </div>
 
       {/* Billing toggle */}
       <div className="flex items-center justify-center gap-3">
         <span className={`text-sm font-medium ${!yearly ? "text-gray-900" : "text-gray-400"}`}>
-          Miesięcznie
+          Monthly
         </span>
         <button
           onClick={() => setYearly(!yearly)}
@@ -142,7 +142,7 @@ export default function PlatnosciPage() {
           <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${yearly ? "translate-x-5" : ""}`} />
         </button>
         <span className={`text-sm font-medium ${yearly ? "text-gray-900" : "text-gray-400"}`}>
-          Rocznie{" "}
+          Yearly{" "}
           <span className="text-green-600 font-semibold">-20%</span>
         </span>
       </div>
@@ -163,7 +163,7 @@ export default function PlatnosciPage() {
               {p.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                    <Zap className="h-3 w-3" /> Popularny
+                    <Zap className="h-3 w-3" /> Popular
                   </span>
                 </div>
               )}
@@ -172,17 +172,17 @@ export default function PlatnosciPage() {
                 <h3 className="font-bold text-gray-900">{p.name}</h3>
                 <div className="flex items-baseline gap-1 mt-1">
                   <span className="text-2xl font-bold text-gray-900">{price}</span>
-                  <span className="text-gray-500 text-sm">zł/mies.</span>
+                  <span className="text-gray-500 text-sm">/mo</span>
                 </div>
               </div>
 
               <ul className="space-y-1.5 text-xs text-gray-600 mb-5 flex-1">
-                <li>✓ {p.sites} strona{p.sites > 1 ? "y/stron" : ""}</li>
-                <li>✓ {p.articles} artykułów</li>
-                <li>✓ {p.keywords} słów kluczowych</li>
-                <li>✓ {p.team === Infinity ? "∞" : p.team} zespół</li>
-                <li>✓ {p.integrations} integracji</li>
-                <li>✓ {p.backlinks} backlinków</li>
+                <li>✓ {p.sites} site{p.sites > 1 ? "s" : ""}</li>
+                <li>✓ {p.articles} articles</li>
+                <li>✓ {p.keywords} keywords</li>
+                <li>✓ {p.team === Infinity ? "∞" : p.team} team members</li>
+                <li>✓ {p.integrations} integrations</li>
+                <li>✓ {p.backlinks} backlinks</li>
                 <div className="my-2 border-t border-gray-100" />
                 {p.features.map((feat, i) => (
                   <li key={feat} className={p.featureFlags[i] ? "text-gray-700" : "text-gray-300 line-through"}>
@@ -205,12 +205,12 @@ export default function PlatnosciPage() {
                 }`}
               >
                 {isActive
-                  ? "Aktualny plan"
+                  ? "Current plan"
                   : loadingPlan === p.id
-                  ? "Ładowanie..."
+                  ? "Loading..."
                   : p.id === "free"
-                  ? "Aktualny plan"
-                  : "Wybierz plan"}
+                  ? "Current plan"
+                  : "Choose plan"}
               </button>
             </div>
           );

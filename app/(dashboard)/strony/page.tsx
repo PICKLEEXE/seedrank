@@ -8,8 +8,8 @@ import { z } from "zod";
 const domainSchema = z.object({
   domain: z
     .string()
-    .min(3, "Podaj domenę")
-    .regex(/^(https?:\/\/)?[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/, "Podaj poprawną domenę"),
+    .min(3, "Please enter a domain")
+    .regex(/^(https?:\/\/)?[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/, "Please enter a valid domain"),
 });
 
 interface Site {
@@ -61,7 +61,7 @@ export default function StronyPage() {
     setSubmitting(false);
 
     if (!res.ok) {
-      setFormError(data.error || "Wystąpił błąd");
+      setFormError(data.error || "An error occurred");
       return;
     }
 
@@ -81,7 +81,7 @@ export default function StronyPage() {
   }
 
   async function deleteSite(id: string) {
-    if (!confirm("Czy na pewno chcesz usunąć tę stronę? Wszystkie powiązane artykuły zostaną usunięte.")) return;
+    if (!confirm("Are you sure you want to delete this site? All associated articles will be removed.")) return;
     await fetch(`/api/sites/${id}`, { method: "DELETE" });
     fetchSites();
   }
@@ -90,15 +90,15 @@ export default function StronyPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Strony</h1>
-          <p className="text-gray-500 text-sm mt-1">Zarządzaj swoimi domenami i SEO</p>
+          <h1 className="text-2xl font-bold text-gray-900">Sites</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage your domains and SEO</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Dodaj stronę
+          Add site
         </button>
       </div>
 
@@ -111,16 +111,16 @@ export default function StronyPage() {
       ) : sites.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
           <Globe className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 font-medium text-lg">Brak stron</p>
+          <p className="text-gray-500 font-medium text-lg">No sites yet</p>
           <p className="text-gray-400 text-sm mt-1 mb-5">
-            Dodaj swoją pierwszą domenę i uruchom SEO Autopilota.
+            Add your first domain and launch the SEO Autopilot.
           </p>
           <button
             onClick={() => setShowModal(true)}
             className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             <Plus className="h-4 w-4" />
-            Dodaj stronę
+            Add site
           </button>
         </div>
       ) : (
@@ -137,19 +137,19 @@ export default function StronyPage() {
                     <div className="flex items-center gap-2 mt-0.5">
                       {site.verified ? (
                         <span className="flex items-center gap-1 text-xs text-green-600">
-                          <CheckCircle className="h-3 w-3" /> Zweryfikowana
+                          <CheckCircle className="h-3 w-3" /> Verified
                         </span>
                       ) : (
                         <button
                           onClick={() => setVerifyingSite(site)}
                           className="flex items-center gap-1 text-xs text-orange-600 hover:underline"
                         >
-                          <XCircle className="h-3 w-3" /> Niezweryfikowana — kliknij aby zweryfikować
+                          <XCircle className="h-3 w-3" /> Not verified — click to verify
                         </button>
                       )}
                       {site.verified && (
                         <span className="text-xs text-gray-400">
-                          • {site._count?.articles || 0} artykułów
+                          • {site._count?.articles || 0} articles
                         </span>
                       )}
                     </div>
@@ -191,7 +191,7 @@ export default function StronyPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-semibold text-gray-900">Dodaj nową stronę</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Add new site</h2>
               <button onClick={() => setShowModal(false)} className="p-1.5 hover:bg-gray-100 rounded-lg">
                 <X className="h-4 w-4 text-gray-500" />
               </button>
@@ -204,15 +204,15 @@ export default function StronyPage() {
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Domena</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Domain</label>
                 <input
                   type="text"
                   value={domain}
                   onChange={(e) => setDomain(e.target.value)}
-                  placeholder="np. mojablog.pl"
+                  placeholder="e.g. myblog.com"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
-                <p className="text-xs text-gray-400 mt-1">Wpisz samą domenę bez https://</p>
+                <p className="text-xs text-gray-400 mt-1">Enter the domain without https://</p>
               </div>
               <div className="flex gap-3 pt-2">
                 <button
@@ -220,14 +220,14 @@ export default function StronyPage() {
                   onClick={() => setShowModal(false)}
                   className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
-                  Anuluj
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
                   className="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
                 >
-                  {submitting ? "Dodawanie..." : "Dodaj"}
+                  {submitting ? "Adding..." : "Add"}
                 </button>
               </div>
             </form>
@@ -240,13 +240,13 @@ export default function StronyPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-semibold text-gray-900">Weryfikacja domeny</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Domain verification</h2>
               <button onClick={() => setVerifyingSite(null)} className="p-1.5 hover:bg-gray-100 rounded-lg">
                 <X className="h-4 w-4 text-gray-500" />
               </button>
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              Zweryfikuj własność domeny <strong>{verifyingSite.domain}</strong>
+              Verify ownership of <strong>{verifyingSite.domain}</strong>
             </p>
             <DomainVerification
               siteId={verifyingSite.id}

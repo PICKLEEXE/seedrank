@@ -34,8 +34,8 @@ export default function ApiPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Klucze API</h1>
-        <p className="text-gray-500 text-sm mt-1">Zarządzaj kluczami API i trybem działania</p>
+        <h1 className="text-2xl font-bold text-gray-900">API Keys</h1>
+        <p className="text-gray-500 text-sm mt-1">Manage API keys and operating mode</p>
       </div>
 
       {/* Demo Mode Toggle */}
@@ -44,8 +44,8 @@ export default function ApiPage() {
           <div>
             <h2 className="font-semibold text-gray-900">Demo Mode</h2>
             <p className="text-sm text-gray-500 mt-1">
-              Używaj wbudowanych danych demonstracyjnych bez prawdziwych kluczy API.
-              Idealne do testowania platformy.
+              Use built-in demo data without real API keys.
+              Ideal for testing the platform.
             </p>
           </div>
           <button
@@ -59,10 +59,10 @@ export default function ApiPage() {
         {demoMode && (
           <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-sm text-green-700 font-medium">
-              ✓ Demo Mode aktywny
+              ✓ Demo Mode active
             </p>
             <p className="text-xs text-green-600 mt-0.5">
-              Generowanie artykułów, słów kluczowych i backlinków używa symulowanych danych.
+              Article, keyword, and backlink generation uses simulated data.
             </p>
           </div>
         )}
@@ -72,7 +72,7 @@ export default function ApiPage() {
       <div className="bg-white rounded-xl border border-gray-200 p-5">
         <div className="flex items-center gap-2 mb-4">
           <KeyRound className="h-4 w-4 text-gray-500" />
-          <h2 className="font-semibold text-gray-900">Twój klucz API RankRoot</h2>
+          <h2 className="font-semibold text-gray-900">Your RankRoot API Key</h2>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 font-mono text-sm">
@@ -89,13 +89,13 @@ export default function ApiPage() {
 
       {/* External API Keys */}
       <div className="bg-white rounded-xl border border-gray-200 p-5">
-        <h2 className="font-semibold text-gray-900 mb-4">Zewnętrzne klucze API</h2>
+        <h2 className="font-semibold text-gray-900 mb-4">External API keys</h2>
 
         <div className={`space-y-4 ${demoMode ? "opacity-50 pointer-events-none" : ""}`}>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               OpenAI API Key
-              <span className="text-xs text-gray-400 ml-2">(do generowania treści)</span>
+              <span className="text-xs text-gray-400 ml-2">(for content generation)</span>
             </label>
             <input
               type="password"
@@ -109,7 +109,7 @@ export default function ApiPage() {
 
         {demoMode && (
           <p className="text-xs text-gray-400 mt-3">
-            Wyłącz Demo Mode aby skonfigurować zewnętrzne klucze API.
+            Disable Demo Mode to configure external API keys.
           </p>
         )}
       </div>
@@ -119,7 +119,7 @@ export default function ApiPage() {
         disabled={saving}
         className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
       >
-        {saved ? "✓ Zapisano" : saving ? "Zapisywanie..." : "Zapisz ustawienia"}
+        {saved ? "✓ Saved" : saving ? "Saving..." : "Save settings"}
       </button>
     </div>
   );

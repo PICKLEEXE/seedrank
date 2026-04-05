@@ -6,9 +6,9 @@ import Link from "next/link";
 import { z } from "zod";
 
 const schema = z.object({
-  name: z.string().min(2, "Imię musi mieć min. 2 znaki"),
-  email: z.string().email("Podaj poprawny email"),
-  password: z.string().min(6, "Hasło musi mieć min. 6 znaków"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export default function SignupPage() {
@@ -38,7 +38,7 @@ export default function SignupPage() {
     setLoading(false);
 
     if (!res.ok) {
-      setError(data.error || "Wystąpił błąd. Spróbuj ponownie.");
+      setError(data.error || "An error occurred. Please try again.");
       return;
     }
 
@@ -52,7 +52,7 @@ export default function SignupPage() {
           <h1 className="text-3xl font-bold text-gray-900">
             rankroot <span className="text-green-500">AI</span>
           </h1>
-          <p className="text-gray-600 mt-2">Utwórz bezpłatne konto</p>
+          <p className="text-gray-600 mt-2">Create a free account</p>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
@@ -64,13 +64,13 @@ export default function SignupPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Imię i nazwisko</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="Jan Kowalski"
+                placeholder="John Smith"
                 required
               />
             </div>
@@ -82,13 +82,13 @@ export default function SignupPage() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="ty@firma.pl"
+                placeholder="you@company.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input
                 type="password"
                 value={form.password}
@@ -104,14 +104,14 @@ export default function SignupPage() {
               disabled={loading}
               className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Tworzenie konta..." : "Zarejestruj się za darmo"}
+              {loading ? "Creating account..." : "Sign up for free"}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-600 mt-6">
-            Masz już konto?{" "}
+            Already have an account?{" "}
             <Link href="/login" className="text-green-600 hover:text-green-700 font-medium">
-              Zaloguj się
+              Sign in
             </Link>
           </p>
         </div>

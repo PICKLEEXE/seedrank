@@ -32,9 +32,9 @@ interface GscData {
 }
 
 const DAYS_OPTIONS = [
-  { value: 7, label: "7 dni" },
-  { value: 28, label: "28 dni" },
-  { value: 90, label: "90 dni" },
+  { value: 7, label: "7 days" },
+  { value: 28, label: "28 days" },
+  { value: 90, label: "90 days" },
 ];
 
 export default function WydajnoscPage() {
@@ -76,20 +76,20 @@ export default function WydajnoscPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Wydajność</h1>
-          <p className="text-gray-500 text-sm mt-1">Analityka SEO i ruch organiczny</p>
+          <h1 className="text-2xl font-bold text-gray-900">Performance</h1>
+          <p className="text-gray-500 text-sm mt-1">SEO analytics and organic traffic</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
           <TrendingUp className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 font-medium">Połącz Google Search Console</p>
+          <p className="text-gray-500 font-medium">Connect Google Search Console</p>
           <p className="text-gray-400 text-sm mt-1 mb-4">
-            Podłącz GSC aby zobaczyć dane o ruchu i pozycjach.
+            Connect GSC to see traffic and ranking data.
           </p>
           <Link
             href="/integracje"
             className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
-            Połącz GSC →
+            Connect GSC →
           </Link>
         </div>
       </div>
@@ -103,8 +103,8 @@ export default function WydajnoscPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Wydajność</h1>
-          <p className="text-gray-500 text-sm mt-1">Analityka SEO i ruch organiczny</p>
+          <h1 className="text-2xl font-bold text-gray-900">Performance</h1>
+          <p className="text-gray-500 text-sm mt-1">SEO analytics and organic traffic</p>
         </div>
         <div className="flex gap-2">
           {data.sites && data.sites.length > 1 && (
@@ -146,7 +146,7 @@ export default function WydajnoscPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
-                <MousePointerClick className="h-4 w-4" /> Kliknięcia
+                <MousePointerClick className="h-4 w-4" /> Clicks
               </div>
               <p className="text-2xl font-bold text-gray-900">
                 {(data.totals?.clicks ?? 0).toLocaleString()}
@@ -154,7 +154,7 @@ export default function WydajnoscPage() {
             </div>
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
-                <Eye className="h-4 w-4" /> Wyświetlenia
+                <Eye className="h-4 w-4" /> Impressions
               </div>
               <p className="text-2xl font-bold text-gray-900">
                 {(data.totals?.impressions ?? 0).toLocaleString()}
@@ -170,7 +170,7 @@ export default function WydajnoscPage() {
             </div>
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
-                <TrendingUp className="h-4 w-4" /> Śr. pozycja
+                <TrendingUp className="h-4 w-4" /> Avg. position
               </div>
               <p className="text-2xl font-bold text-gray-900">
                 {data.totals?.position ?? "—"}
@@ -181,7 +181,7 @@ export default function WydajnoscPage() {
           {/* Chart */}
           {data.chart && data.chart.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <h2 className="text-sm font-semibold text-gray-700 mb-4">Kliknięcia w czasie</h2>
+              <h2 className="text-sm font-semibold text-gray-700 mb-4">Clicks over time</h2>
               <div className="flex items-end gap-1 h-32">
                 {data.chart.map((row) => (
                   <div
@@ -191,7 +191,7 @@ export default function WydajnoscPage() {
                     <div
                       className="w-full bg-green-400 rounded-t hover:bg-green-500 transition-colors cursor-pointer"
                       style={{ height: `${Math.max((row.clicks / maxClicks) * 100, 2)}%` }}
-                      title={`${row.date}: ${row.clicks} kliknięć`}
+                      title={`${row.date}: ${row.clicks} clicks`}
                     />
                   </div>
                 ))}
@@ -207,16 +207,16 @@ export default function WydajnoscPage() {
           {data.topQueries && data.topQueries.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               <div className="px-5 py-4 border-b border-gray-100">
-                <h2 className="text-sm font-semibold text-gray-700">Top zapytania</h2>
+                <h2 className="text-sm font-semibold text-gray-700">Top queries</h2>
               </div>
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-100">
-                    <th className="text-left px-5 py-3 font-medium text-gray-600">Zapytanie</th>
-                    <th className="text-right px-5 py-3 font-medium text-gray-600">Kliknięcia</th>
-                    <th className="text-right px-5 py-3 font-medium text-gray-600">Wyświetlenia</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-600">Query</th>
+                    <th className="text-right px-5 py-3 font-medium text-gray-600">Clicks</th>
+                    <th className="text-right px-5 py-3 font-medium text-gray-600">Impressions</th>
                     <th className="text-right px-5 py-3 font-medium text-gray-600">CTR</th>
-                    <th className="text-right px-5 py-3 font-medium text-gray-600">Pozycja</th>
+                    <th className="text-right px-5 py-3 font-medium text-gray-600">Position</th>
                   </tr>
                 </thead>
                 <tbody>

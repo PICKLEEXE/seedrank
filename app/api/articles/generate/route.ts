@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const plan = PLANS[user.planId as keyof typeof PLANS] || PLANS.free;
     const articleCount = await prisma.article.count({ where: { site: { userId: user.id } } });
     if (articleCount >= plan.articles) {
-      return NextResponse.json({ error: `Limit artykułów osiągnięty (${plan.articles})` }, { status: 403 });
+      return NextResponse.json({ error: `Article limit reached (${plan.articles})` }, { status: 403 });
     }
 
     // Demo mode — use mock generation
@@ -50,6 +50,6 @@ export async function POST(req: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Wewnętrzny błąd serwera" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -16,12 +16,12 @@ const statusColors: Record<string, string> = {
 };
 
 const statusLabels: Record<string, string> = {
-  published: "Opublikowany",
-  approved: "Zatwierdzony",
-  draft: "Szkic",
-  generating: "Generowanie",
-  scheduled: "Zaplanowany",
-  review: "Do recenzji",
+  published: "Published",
+  approved: "Approved",
+  draft: "Draft",
+  generating: "Generating",
+  scheduled: "Scheduled",
+  review: "In review",
 };
 
 interface Article {
@@ -75,20 +75,20 @@ export default function ArtykulPage() {
       });
       if (!res.ok) {
         const d = await res.json();
-        setError(d.error || "Błąd zapisu.");
+        setError(d.error || "Save error.");
       } else {
         setSaved(true);
         setTimeout(() => setSaved(false), 2500);
       }
     } catch {
-      setError("Błąd sieci.");
+      setError("Network error.");
     } finally {
       setSaving(false);
     }
   }
 
   async function handleDelete() {
-    if (!confirm("Usunąć artykuł? Tej operacji nie można cofnąć.")) return;
+    if (!confirm("Delete this article? This action cannot be undone.")) return;
     await fetch(`/api/articles/${id}`, { method: "DELETE" });
     router.push("/artykuly");
   }
@@ -104,9 +104,9 @@ export default function ArtykulPage() {
   if (!article) {
     return (
       <div className="text-center py-24">
-        <p className="text-gray-500">Artykuł nie został znaleziony.</p>
+        <p className="text-gray-500">Article not found.</p>
         <Link href="/artykuly" className="text-green-600 hover:underline text-sm mt-2 inline-block">
-          ← Wróć do artykułów
+          ← Back to articles
         </Link>
       </div>
     );
@@ -154,7 +154,7 @@ export default function ArtykulPage() {
             ) : (
               <Save className="h-4 w-4" />
             )}
-            {saved ? "Zapisano" : "Zapisz"}
+            {saved ? "Saved" : "Save"}
           </button>
         </div>
       </div>
@@ -170,7 +170,7 @@ export default function ArtykulPage() {
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Tytuł</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Title</label>
               <input
                 type="text"
                 value={title}
@@ -179,7 +179,7 @@ export default function ArtykulPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Treść</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Content</label>
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
@@ -221,13 +221,13 @@ export default function ArtykulPage() {
                 <span className="text-sm font-bold text-gray-900">{article.seoScore}</span>
               </div>
             ) : (
-              <p className="text-sm text-gray-400">Brak oceny</p>
+              <p className="text-sm text-gray-400">No score</p>
             )}
           </div>
 
           {article.targetKeywords.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-3">
-              <h3 className="text-sm font-semibold text-gray-700">Słowa kluczowe</h3>
+              <h3 className="text-sm font-semibold text-gray-700">Keywords</h3>
               <div className="flex flex-wrap gap-1.5">
                 {article.targetKeywords.map((kw) => (
                   <span
@@ -243,21 +243,21 @@ export default function ArtykulPage() {
 
           <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2 text-xs text-gray-500">
             <div className="flex justify-between">
-              <span>Strona</span>
+              <span>Site</span>
               <span className="font-medium text-gray-700">{article.site?.domain}</span>
             </div>
             <div className="flex justify-between">
-              <span>Utworzono</span>
+              <span>Created</span>
               <span>{formatDate(article.createdAt)}</span>
             </div>
             {article.publishedAt && (
               <div className="flex justify-between">
-                <span>Opublikowano</span>
+                <span>Published</span>
                 <span>{formatDate(article.publishedAt)}</span>
               </div>
             )}
             <div className="flex justify-between">
-              <span>Znaki</span>
+              <span>Characters</span>
               <span>{content.length.toLocaleString()}</span>
             </div>
           </div>

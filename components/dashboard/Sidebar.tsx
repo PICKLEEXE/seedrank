@@ -18,20 +18,20 @@ import {
 } from "lucide-react";
 
 const mainNav = [
-  { href: "/panel", label: "Panel", icon: LayoutDashboard },
-  { href: "/strony", label: "Strony", icon: Globe },
-  { href: "/artykuly", label: "Artykuły", icon: FileText },
-  { href: "/slowa-kluczowe", label: "Słowa kluczowe", icon: Tag },
-  { href: "/wydajnosc", label: "Wydajność", icon: TrendingUp },
+  { href: "/panel", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/strony", label: "Sites", icon: Globe },
+  { href: "/artykuly", label: "Articles", icon: FileText },
+  { href: "/slowa-kluczowe", label: "Keywords", icon: Tag },
+  { href: "/wydajnosc", label: "Performance", icon: TrendingUp },
   { href: "/social", label: "Social Media", icon: Share2 },
-  { href: "/integracje", label: "Integracje", icon: Plug },
+  { href: "/integracje", label: "Integrations", icon: Plug },
 ];
 
 const settingsNav = [
-  { href: "/ustawienia/organizacja", label: "Organizacja", icon: Building2 },
-  { href: "/ustawienia/platnosci", label: "Płatności", icon: CreditCard },
-  { href: "/ustawienia/api", label: "Klucze API", icon: KeyRound },
-  { href: "/ustawienia/zespol", label: "Zespół", icon: Users },
+  { href: "/ustawienia/organizacja", label: "Organization", icon: Building2 },
+  { href: "/ustawienia/platnosci", label: "Billing", icon: CreditCard },
+  { href: "/ustawienia/api", label: "API Keys", icon: KeyRound },
+  { href: "/ustawienia/zespol", label: "Team", icon: Users },
 ];
 
 export function Sidebar({ planId = "free" }: { planId?: string }) {
@@ -74,7 +74,7 @@ export function Sidebar({ planId = "free" }: { planId?: string }) {
 
         <div className="pt-4 pb-1">
           <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Ustawienia
+            Settings
           </p>
         </div>
 

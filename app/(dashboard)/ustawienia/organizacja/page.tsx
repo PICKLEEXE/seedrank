@@ -42,13 +42,13 @@ export default function OrganizacjaPage() {
       });
       if (!res.ok) {
         const d = await res.json();
-        setError(d.error || "Błąd zapisu.");
+        setError(d.error || "Save error.");
       } else {
         setSaved(true);
         setTimeout(() => setSaved(false), 2500);
       }
     } catch {
-      setError("Błąd sieci. Spróbuj ponownie.");
+      setError("Network error. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -65,33 +65,33 @@ export default function OrganizacjaPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Organizacja</h1>
-        <p className="text-gray-500 text-sm mt-1">Ustawienia konta i profilu</p>
+        <h1 className="text-2xl font-bold text-gray-900">Organization</h1>
+        <p className="text-gray-500 text-sm mt-1">Account and profile settings</p>
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
-        <h2 className="text-sm font-semibold text-gray-700">Informacje o koncie</h2>
+        <h2 className="text-sm font-semibold text-gray-700">Account information</h2>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Nazwa</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Twoja nazwa lub nazwa firmy"
+            placeholder="Your name or company name"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Adres e-mail</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
           <input
             type="email"
             value={userData?.email || ""}
             disabled
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 text-gray-500 cursor-not-allowed"
           />
-          <p className="text-xs text-gray-400 mt-1">Adres e-mail nie może być zmieniony.</p>
+          <p className="text-xs text-gray-400 mt-1">Email address cannot be changed.</p>
         </div>
 
         {error && (
@@ -113,23 +113,23 @@ export default function OrganizacjaPage() {
             ) : (
               <Save className="h-4 w-4" />
             )}
-            {saved ? "Zapisano" : "Zapisz zmiany"}
+            {saved ? "Saved" : "Save changes"}
           </button>
         </div>
       </div>
 
       {userData && (
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-3">
-          <h2 className="text-sm font-semibold text-gray-700">Szczegóły konta</h2>
+          <h2 className="text-sm font-semibold text-gray-700">Account details</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between py-2 border-b border-gray-50">
               <span className="text-gray-500">Plan</span>
               <span className="font-medium capitalize text-gray-900">{userData.planId}</span>
             </div>
             <div className="flex justify-between py-2">
-              <span className="text-gray-500">Konto utworzono</span>
+              <span className="text-gray-500">Account created</span>
               <span className="text-gray-700">
-                {new Date(userData.createdAt).toLocaleDateString("pl-PL", {
+                {new Date(userData.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

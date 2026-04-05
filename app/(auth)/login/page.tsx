@@ -7,8 +7,8 @@ import Link from "next/link";
 import { z } from "zod";
 
 const schema = z.object({
-  email: z.string().email("Podaj poprawny email"),
-  password: z.string().min(6, "Hasło musi mieć min. 6 znaków"),
+  email: z.string().email("Please enter a valid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export default function LoginPage() {
@@ -37,7 +37,7 @@ export default function LoginPage() {
     setLoading(false);
 
     if (res?.error) {
-      setError("Nieprawidłowy email lub hasło");
+      setError("Invalid email or password");
     } else {
       router.push("/panel");
       router.refresh();
@@ -51,7 +51,7 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-gray-900">
             rankroot <span className="text-green-500">AI</span>
           </h1>
-          <p className="text-gray-600 mt-2">Zaloguj się do swojego konta</p>
+          <p className="text-gray-600 mt-2">Sign in to your account</p>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
@@ -71,14 +71,14 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="ty@firma.pl"
+                placeholder="you@company.com"
                 required
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Hasło
+                Password
               </label>
               <input
                 type="password"
@@ -95,14 +95,14 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Logowanie..." : "Zaloguj się"}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-600 mt-6">
-            Nie masz konta?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-green-600 hover:text-green-700 font-medium">
-              Zarejestruj się
+              Sign up
             </Link>
           </p>
         </div>

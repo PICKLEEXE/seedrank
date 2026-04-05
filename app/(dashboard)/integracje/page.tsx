@@ -59,7 +59,7 @@ export default function IntegracjePage() {
   }
 
   async function deleteIntegration(id: string) {
-    if (!confirm("Odłączyć integrację?")) return;
+    if (!confirm("Disconnect this integration?")) return;
     await fetch(`/api/integrations/${id}`, { method: "DELETE" });
     fetchIntegrations();
   }
@@ -67,14 +67,14 @@ export default function IntegracjePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Integracje</h1>
-        <p className="text-gray-500 text-sm mt-1">Połącz swoje narzędzia analityczne i CMS</p>
+        <h1 className="text-2xl font-bold text-gray-900">Integrations</h1>
+        <p className="text-gray-500 text-sm mt-1">Connect your analytics tools and CMS</p>
       </div>
 
       {/* Analytics section */}
       <section>
         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
-          Integracje analityczne
+          Analytics integrations
         </h2>
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <div className="flex items-center justify-between">
@@ -84,20 +84,20 @@ export default function IntegracjePage() {
               </div>
               <div>
                 <p className="font-semibold text-gray-900">Google Search Console</p>
-                <p className="text-sm text-gray-500">Monitoruj pozycje i ruch organiczny</p>
+                <p className="text-sm text-gray-500">Monitor rankings and organic traffic</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               {gscConnected ? (
                 <span className="flex items-center gap-1.5 text-sm text-green-600 bg-green-50 px-3 py-1.5 rounded-lg">
-                  <CheckCircle className="h-4 w-4" /> Połączono
+                  <CheckCircle className="h-4 w-4" /> Connected
                 </span>
               ) : (
                 <button
                   onClick={connectGSC}
                   className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
-                  Połącz GSC
+                  Connect GSC
                 </button>
               )}
             </div>
@@ -109,14 +109,14 @@ export default function IntegracjePage() {
       <section>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-            Integracje CMS
+            CMS integrations
           </h2>
           <button
             onClick={() => setShowModal(true)}
             className="flex items-center gap-1.5 text-sm text-green-600 hover:text-green-700 font-medium"
           >
             <Plus className="h-4 w-4" />
-            Dodaj integrację
+            Add integration
           </button>
         </div>
 
@@ -125,16 +125,16 @@ export default function IntegracjePage() {
         ) : integrations.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
             <Plug className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Brak integracji</p>
+            <p className="text-gray-500 font-medium">No integrations</p>
             <p className="text-gray-400 text-sm mt-1 mb-5">
-              Połącz swój CMS, aby automatycznie publikować artykuły
+              Connect your CMS to automatically publish articles
             </p>
             <button
               onClick={() => setShowModal(true)}
               className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <Plus className="h-4 w-4" />
-              Dodaj integrację
+              Add integration
             </button>
           </div>
         ) : (
@@ -156,7 +156,7 @@ export default function IntegracjePage() {
                     <span className={`text-xs font-medium px-2 py-1 rounded-full ${
                       integration.status === "connected" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
                     }`}>
-                      {integration.status === "connected" ? "Połączono" : integration.status}
+                      {integration.status === "connected" ? "Connected" : integration.status}
                     </span>
                     <button
                       onClick={() => deleteIntegration(integration.id)}
@@ -177,7 +177,7 @@ export default function IntegracjePage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-semibold text-gray-900">Dodaj integrację CMS</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Add CMS integration</h2>
               <button onClick={() => { setShowModal(false); setSelectedCMS(null); }} className="p-1.5 hover:bg-gray-100 rounded-lg">
                 <X className="h-4 w-4 text-gray-500" />
               </button>
@@ -185,7 +185,7 @@ export default function IntegracjePage() {
 
             {!selectedCMS ? (
               <div className="space-y-3">
-                <p className="text-sm text-gray-600 mb-4">Wybierz platformę CMS:</p>
+                <p className="text-sm text-gray-600 mb-4">Select a CMS platform:</p>
                 {CMS_OPTIONS.map((cms) => (
                   <button
                     key={cms.type}
@@ -200,21 +200,21 @@ export default function IntegracjePage() {
             ) : (
               <form onSubmit={saveCMS} className="space-y-4">
                 <p className="text-sm text-gray-600">
-                  Połącz <strong>{CMS_OPTIONS.find((c) => c.type === selectedCMS)?.label}</strong>
+                  Connect <strong>{CMS_OPTIONS.find((c) => c.type === selectedCMS)?.label}</strong>
                 </p>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">URL strony</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Site URL</label>
                   <input
                     type="url"
                     value={cmsForm.url}
                     onChange={(e) => setCmsForm({ ...cmsForm, url: e.target.value })}
-                    placeholder="https://mojablog.pl"
+                    placeholder="https://myblog.com"
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nazwa użytkownika</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
                   <input
                     type="text"
                     value={cmsForm.username}
@@ -224,7 +224,7 @@ export default function IntegracjePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Hasło aplikacji</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Application password</label>
                   <input
                     type="password"
                     value={cmsForm.appPassword}
@@ -233,15 +233,15 @@ export default function IntegracjePage() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                   />
                   <p className="text-xs text-gray-400 mt-1">
-                    Utwórz hasło aplikacji w WP Admin → Użytkownicy → Twój profil
+                    Create an application password in WP Admin → Users → Your Profile
                   </p>
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setSelectedCMS(null)} className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm font-medium">
-                    Wróć
+                    Back
                   </button>
                   <button type="submit" disabled={saving} className="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">
-                    {saving ? "Łączenie..." : "Połącz"}
+                    {saving ? "Connecting..." : "Connect"}
                   </button>
                 </div>
               </form>

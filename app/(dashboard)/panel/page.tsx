@@ -40,11 +40,11 @@ export default async function PanelPage() {
   };
 
   const statusLabels: Record<string, string> = {
-    published: "Opublikowany",
-    approved: "Zatwierdzony",
-    draft: "Szkic",
-    generating: "Generowanie",
-    scheduled: "Zaplanowany",
+    published: "Published",
+    approved: "Approved",
+    draft: "Draft",
+    generating: "Generating",
+    scheduled: "Scheduled",
   };
 
   return (
@@ -52,46 +52,46 @@ export default async function PanelPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Panel główny</h1>
-          <p className="text-gray-500 text-sm mt-1">Witaj, {user.name || user.email}</p>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-500 text-sm mt-1">Welcome, {user.name || user.email}</p>
         </div>
         <Link
           href="/strony"
           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Dodaj stronę
+          Add site
         </Link>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          title="Wygenerowane artykuły"
+          title="Generated articles"
           value={totalArticles}
           icon={FileText}
-          description="łącznie we wszystkich stronach"
+          description="total across all sites"
           iconColor="text-blue-500"
         />
         <StatsCard
-          title="Ruch organiczny"
+          title="Organic traffic"
           value="—"
           icon={TrendingUp}
-          description="Podłącz GSC, aby zobaczyć dane"
+          description="Connect GSC to see data"
           iconColor="text-purple-500"
         />
         <StatsCard
-          title="Blogi / Strony"
+          title="Blogs / Sites"
           value={user.sites.length}
           icon={Globe}
-          description={`${activeSites} zweryfikowanych`}
+          description={`${activeSites} verified`}
           iconColor="text-green-500"
         />
         <StatsCard
-          title="Aktywne strony"
+          title="Active sites"
           value={activeSites}
           icon={Zap}
-          description={`${autopilotSites} na autopilocie`}
+          description={`${autopilotSites} on autopilot`}
           iconColor="text-orange-500"
         />
       </div>
@@ -99,19 +99,19 @@ export default async function PanelPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Articles */}
         <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
-          <h2 className="font-semibold text-gray-900 mb-4">Ostatnie artykuły</h2>
+          <h2 className="font-semibold text-gray-900 mb-4">Recent articles</h2>
 
           {recentArticles.length === 0 ? (
             <div className="text-center py-12">
               <FileText className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500 font-medium">Brak artykułów</p>
-              <p className="text-gray-400 text-sm mt-1">Dodaj stronę i uruchom autopilota.</p>
+              <p className="text-gray-500 font-medium">No articles yet</p>
+              <p className="text-gray-400 text-sm mt-1">Add a site and enable autopilot.</p>
               <Link
                 href="/strony"
                 className="inline-flex items-center gap-2 mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 <Plus className="h-4 w-4" />
-                Dodaj stronę
+                Add site
               </Link>
             </div>
           ) : (
@@ -140,22 +140,22 @@ export default async function PanelPage() {
         <div className="space-y-4">
           {/* Plan card */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h2 className="font-semibold text-gray-900 mb-4">Twój pakiet</h2>
+            <h2 className="font-semibold text-gray-900 mb-4">Your plan</h2>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-medium text-gray-600">Plan</span>
               <span className="text-sm font-bold text-green-600 uppercase">{plan.name}</span>
             </div>
             <div className="space-y-3">
-              <LimitRow label="Artykuły" used={totalArticles} max={plan.articles} />
-              <LimitRow label="Strony" used={user.sites.length} max={plan.sites} />
-              <LimitRow label="Backlinki" used={0} max={plan.backlinks} />
-              <LimitRow label="Słowa kluczowe" used={0} max={plan.keywords} />
+              <LimitRow label="Articles" used={totalArticles} max={plan.articles} />
+              <LimitRow label="Sites" used={user.sites.length} max={plan.sites} />
+              <LimitRow label="Backlinks" used={0} max={plan.backlinks} />
+              <LimitRow label="Keywords" used={0} max={plan.keywords} />
             </div>
             <Link
               href="/ustawienia/platnosci"
               className="block text-center mt-4 text-sm text-green-600 hover:text-green-700 font-medium"
             >
-              Ulepsz plan →
+              Upgrade plan →
             </Link>
           </div>
 
@@ -163,19 +163,19 @@ export default async function PanelPage() {
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Bot className="h-4 w-4 text-gray-400" />
-              <h2 className="font-semibold text-gray-900">Autopilot SEO</h2>
+              <h2 className="font-semibold text-gray-900">SEO Autopilot</h2>
             </div>
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-gray-300" />
-              <span className="text-sm text-gray-500">NIEAKTYWNY</span>
+              <span className="text-sm text-gray-500">INACTIVE</span>
             </div>
-            <p className="text-xs text-gray-400 mt-2">{autopilotSites} stron na autopilocie</p>
+            <p className="text-xs text-gray-400 mt-2">{autopilotSites} sites on autopilot</p>
             {user.sites.length > 0 && (
               <Link
                 href="/strony"
                 className="block text-center mt-3 text-xs text-green-600 hover:text-green-700 font-medium"
               >
-                Zarządzaj stronami →
+                Manage sites →
               </Link>
             )}
           </div>

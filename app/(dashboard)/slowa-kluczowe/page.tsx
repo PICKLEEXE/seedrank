@@ -75,8 +75,8 @@ export default function SlowaKluczowePage() {
 
   async function handleAdd() {
     setAddError("");
-    if (!newKeyword.trim()) return setAddError("Wpisz słowo kluczowe.");
-    if (!newSiteId) return setAddError("Wybierz stronę.");
+    if (!newKeyword.trim()) return setAddError("Please enter a keyword.");
+    if (!newSiteId) return setAddError("Please select a site.");
     setAdding(true);
     try {
       const res = await fetch("/api/keywords", {
@@ -86,21 +86,21 @@ export default function SlowaKluczowePage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setAddError(data.error || "Błąd dodawania.");
+        setAddError(data.error || "Error adding keyword.");
       } else {
         setKeywords((prev) => [data.keyword, ...prev]);
         setNewKeyword("");
         setShowModal(false);
       }
     } catch {
-      setAddError("Błąd sieci.");
+      setAddError("Network error.");
     } finally {
       setAdding(false);
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Usunąć słowo kluczowe?")) return;
+    if (!confirm("Delete this keyword?")) return;
     await fetch(`/api/keywords/${id}`, { method: "DELETE" });
     setKeywords((prev) => prev.filter((k) => k.id !== id));
   }
@@ -121,15 +121,15 @@ export default function SlowaKluczowePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Słowa kluczowe</h1>
-          <p className="text-gray-500 text-sm mt-1">Śledź pozycje i analizuj trudność</p>
+          <h1 className="text-2xl font-bold text-gray-900">Keywords</h1>
+          <p className="text-gray-500 text-sm mt-1">Track positions and analyze difficulty</p>
         </div>
         <button
           onClick={() => { setShowModal(true); setAddError(""); setNewKeyword(""); }}
           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Dodaj słowo
+          Add keyword
         </button>
       </div>
 
@@ -137,7 +137,7 @@ export default function SlowaKluczowePage() {
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
-            <Target className="h-4 w-4" /> Śledzone
+            <Target className="h-4 w-4" /> Tracked
           </div>
           <p className="text-2xl font-bold text-gray-900">{tracked}</p>
         </div>
@@ -149,7 +149,7 @@ export default function SlowaKluczowePage() {
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
-            <BarChart2 className="h-4 w-4" /> Śr. pozycja
+            <BarChart2 className="h-4 w-4" /> Avg. position
           </div>
           <p className="text-2xl font-bold text-gray-900">{avgPosition ?? "—"}</p>
         </div>
@@ -161,7 +161,7 @@ export default function SlowaKluczowePage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Szukaj słów kluczowych..."
+            placeholder="Search keywords..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
@@ -172,7 +172,7 @@ export default function SlowaKluczowePage() {
           onChange={(e) => setSelectedSite(e.target.value)}
           className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
         >
-          <option value="all">Wszystkie strony</option>
+          <option value="all">All sites</option>
           {sites.map((s) => (
             <option key={s.id} value={s.domain}>{s.domain}</option>
           ))}
@@ -191,8 +191,8 @@ export default function SlowaKluczowePage() {
           <Target className="h-12 w-12 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500 font-medium">
             {keywords.length === 0
-              ? "Brak śledzonych słów kluczowych."
-              : "Brak wyników dla podanych filtrów."}
+              ? "No keywords being tracked."
+              : "No results for the selected filters."}
           </p>
           {keywords.length === 0 && (
             <button
@@ -200,7 +200,7 @@ export default function SlowaKluczowePage() {
               className="inline-flex items-center gap-2 mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <Plus className="h-4 w-4" />
-              Dodaj pierwsze słowo
+              Add first keyword
             </button>
           )}
         </div>
@@ -209,11 +209,11 @@ export default function SlowaKluczowePage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
-                <th className="text-left px-5 py-3 font-medium text-gray-600">Słowo kluczowe</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-600">Strona</th>
-                <th className="text-center px-5 py-3 font-medium text-gray-600">Pozycja</th>
-                <th className="text-center px-5 py-3 font-medium text-gray-600">Volumen</th>
-                <th className="text-center px-5 py-3 font-medium text-gray-600">Trudność</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-600">Keyword</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-600">Site</th>
+                <th className="text-center px-5 py-3 font-medium text-gray-600">Position</th>
+                <th className="text-center px-5 py-3 font-medium text-gray-600">Volume</th>
+                <th className="text-center px-5 py-3 font-medium text-gray-600">Difficulty</th>
                 <th className="px-5 py-3" />
               </tr>
             </thead>
@@ -253,7 +253,7 @@ export default function SlowaKluczowePage() {
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">Dodaj słowo kluczowe</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Add keyword</h2>
               <button
                 onClick={() => setShowModal(false)}
                 className="p-1 hover:bg-gray-100 rounded-lg text-gray-400"
@@ -263,11 +263,11 @@ export default function SlowaKluczowePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Strona</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Site</label>
               {sites.length === 0 ? (
                 <p className="text-sm text-gray-500 border border-dashed border-gray-300 rounded-lg p-3 text-center">
-                  Brak zweryfikowanych stron.{" "}
-                  <a href="/strony" className="text-green-600 hover:underline">Dodaj stronę →</a>
+                  No verified sites.{" "}
+                  <a href="/strony" className="text-green-600 hover:underline">Add a site →</a>
                 </p>
               ) : (
                 <select
@@ -283,13 +283,13 @@ export default function SlowaKluczowePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Słowo kluczowe</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Keyword</label>
               <input
                 type="text"
                 value={newKeyword}
                 onChange={(e) => setNewKeyword(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-                placeholder="np. pozycjonowanie stron"
+                placeholder="e.g. seo optimization"
                 autoFocus
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               />
@@ -306,7 +306,7 @@ export default function SlowaKluczowePage() {
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                Anuluj
+                Cancel
               </button>
               <button
                 onClick={handleAdd}
@@ -314,7 +314,7 @@ export default function SlowaKluczowePage() {
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
-                Dodaj
+                Add
               </button>
             </div>
           </div>
