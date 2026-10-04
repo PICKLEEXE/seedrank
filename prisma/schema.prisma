@@ -8,15 +8,18 @@ datasource db {
 }
 
 model User {
-  id               String        @id @default(cuid())
-  email            String        @unique
-  name             String?
-  password         String
-  planId           String        @default("free")
-  stripeCustomerId String?
-  sites            Site[]
-  integrations     Integration[]
-  createdAt        DateTime      @default(now())
+  id                 String         @id @default(cuid())
+  email              String         @unique
+  name               String?
+  password           String
+  planId             String         @default("free")
+  stripeCustomerId   String?
+  sites              Site[]
+  integrations       Integration[]
+  linkedinPosts      LinkedInPost[]
+  linkedinConnected  Boolean        @default(false)
+  linkedinProfileUrl String?
+  createdAt          DateTime       @default(now())
 }
 
 model Site {
@@ -77,4 +80,25 @@ model Backlink {
   targetUrl    String
   status       String   @default("active")
   discoveredAt DateTime @default(now())
+}
+
+model LinkedInPost {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  articleId    String?
+  content      String    @db.Text
+  hook         String?
+  cta          String?
+  hashtags     String[]
+  status       String    @default("draft")
+  scheduledFor DateTime?
+  publishedAt  DateTime?
+  linkedinUrl  String?
+  impressions  Int       @default(0)
+  likes        Int       @default(0)
+  comments     Int       @default(0)
+  shares       Int       @default(0)
+  clicks       Int       @default(0)
+  createdAt    DateTime  @default(now())
 }

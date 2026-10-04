@@ -8,7 +8,7 @@ import {
   Globe,
   FileText,
   TrendingUp,
-  Share2,
+  Linkedin,
   Plug,
   Building2,
   CreditCard,
@@ -23,7 +23,7 @@ const mainNav = [
   { href: "/artykuly", label: "Articles", icon: FileText },
   { href: "/slowa-kluczowe", label: "Keywords", icon: Tag },
   { href: "/wydajnosc", label: "Performance", icon: TrendingUp },
-  { href: "/social", label: "Social Media", icon: Share2 },
+  { href: "/social", label: "LinkedIn Autopilot", icon: Linkedin },
   { href: "/integracje", label: "Integrations", icon: Plug },
 ];
 
